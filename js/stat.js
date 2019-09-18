@@ -5,7 +5,7 @@ var CLOUD_X = 100;
 var GAP = 50;
 var COL_WIDTH = 40;
 
-var renderCloud = function(ctx, x, y, color) {
+var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 };
@@ -21,9 +21,9 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillText('Список результатов:', 130, 45);
 
   var max = 0;
-  for (var i = 0; i < times.length; i++) {
-    if (times[i] > max) {
-      max = times[i];
+  for (var j = 0; j < times.length; j++) {
+    if (times[j] > max) {
+      max = times[j];
     }
   }
 
@@ -34,7 +34,7 @@ window.renderStatistics = function (ctx, names, times) {
     if (names[i] === 'Вы') {
       color = 'rgba(255, 0, 0, 1)';
     } else {
-      var saturation = Math.round(Math.random()*100);
+      var saturation = Math.round(Math.random() * 100);
       color = 'hsl(240, ' + saturation + '%, 50%)';
     }
     ctx.fillStyle = color;
@@ -43,5 +43,5 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.textBaseline = 'hanging';
     ctx.fillText(Math.round(times[i]), CLOUD_X + GAP + i * (GAP + COL_WIDTH), 70 + top);
     ctx.fillText(names[i], CLOUD_X + GAP + i * (GAP + COL_WIDTH), 245);
-  };
-}
+  }
+};
