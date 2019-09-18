@@ -7,7 +7,7 @@ var COL_WIDTH = 40;
 
 var renderCloud = function(ctx, x, y, color) {
   ctx.fillStyle = color;
-  ctx.fillRect(x , y, CLOUD_WIDTH, CLOUD_HEIGHT);
+  ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 };
 
 window.renderStatistics = function (ctx, names, times) {
@@ -28,14 +28,14 @@ window.renderStatistics = function (ctx, names, times) {
   }
 
   for (var i = 0; i < names.length; i++) {
-    var height = times[i]*150/max;
+    var height = times[i] * 150 / max;
     var top = 150 - height;
     var color;
     if (names[i] === 'Вы') {
       color = 'rgba(255, 0, 0, 1)';
     } else {
       var saturation = Math.round(Math.random()*100);
-      color = 'hsl(240,' + saturation +'%, 50%)';
+      color = 'hsl(240, ' + saturation + '%, 50%)';
     }
     ctx.fillStyle = color;
     ctx.fillRect((CLOUD_X + GAP + i * (GAP + COL_WIDTH)), 90 + top, COL_WIDTH, height);
