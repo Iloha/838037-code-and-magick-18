@@ -9,8 +9,8 @@ var STAT_TOP = 90;
 var TIME_TOP = 70;
 var NAME_TOP = 245;
 
-var maxNumber = 0;
 var getMax = function (array) {
+  var maxNumber = 0;
   for (var j = 0; j < array.length; j++) {
     if (array[j] > maxNumber) {
       maxNumber = array[j];
@@ -50,14 +50,12 @@ var renderText = function (ctx, text, i, top) {
 };
 
 var getColor = function (name) {
-  var color = '';
   if (name === 'Вы') {
-    color = 'rgba(255, 0, 0, 1)';
+    return 'rgba(255, 0, 0, 1)';
   } else {
     var saturation = getRandom();
-    color = 'hsl(240, ' + saturation + '%, 50%)';
+    return 'hsl(240, ' + saturation + '%, 50%)';
   }
-  return color;
 };
 
 window.renderStatistics = function (ctx, names, times) {
