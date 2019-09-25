@@ -90,17 +90,24 @@ wizardsList.appendChild(fragment);
 userDialog.classList.remove('hidden');
 setUpSimilar.classList.remove('hidden');
 
+
+
+
 var setupOpen = document.querySelector('.setup-open');
 var setup = document.querySelector('.setup');
 var setupClose = setup.querySelector('.setup-close');
-var setupSubmit = setup.querySelector('setup-submit');
-// var setupOpenIcon = document.querySelector('.setup-open-icon');
+var setupSubmit = setup.querySelector('.setup-submit');
+var nameField = setup.querySelector('.setup-user-name');
+var wizardCoat = document.querySelector('.setup-wizard .wizard-coat ');
+var wizardCoatField = setup.querySelector('input[name="coat-color"]')
 
+
+// Handlers
 var onButtonClickOpen = function () {
   setup.classList.remove('hidden');
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === 27 && document.activeElement !== nameField) {
       onButtonClickClose();
     }
   });
@@ -110,8 +117,15 @@ var onButtonClickClose = function () {
   setup.classList.add('hidden');
 };
 
-var onFormSubmit = function () {
+// var onFormSubmit = function () {
+// };
 
+var onUpdateColor = function () {
+  var coatColor = getRandomFromArray(coatColorArray);
+  wizardCoatField.value = coatColor;
+  wizardCoat.style.fill = coatColor;
+
+  console.log(wizardCoat.style.fill, wizardCoatField.value, coatColor)
 };
 
 setupOpen.addEventListener('click', onButtonClickOpen);
@@ -124,9 +138,16 @@ setupOpen.addEventListener('keydown', function (evt) {
 
 setupClose.addEventListener('click', onButtonClickClose);
 
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    onButtonClickClose();
+  }
+});
+
+wizardCoat.addEventListener('click', onUpdateColor);
+
+
 
 // Когда окно открыто,
-//                    если фокус не на форме ввода имени то ESC должен вызвать onButtonClickClose,
-//                    если фокус находится на кнопке закрытия, то ENTER должен вызвать onButtonClickClose
 //                    «Сохранить» приводит onFormSubmit
 //                    если фокус находится на «Сохранить», то ENTER приводит к onFormSubmit
