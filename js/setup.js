@@ -89,3 +89,44 @@ wizardsList.appendChild(fragment);
 
 userDialog.classList.remove('hidden');
 setUpSimilar.classList.remove('hidden');
+
+var setupOpen = document.querySelector('.setup-open');
+var setup = document.querySelector('.setup');
+var setupClose = setup.querySelector('.setup-close');
+var setupSubmit = setup.querySelector('setup-submit');
+// var setupOpenIcon = document.querySelector('.setup-open-icon');
+
+var onButtonClickOpen = function () {
+  setup.classList.remove('hidden');
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27) {
+      onButtonClickClose();
+    }
+  });
+};
+
+var onButtonClickClose = function () {
+  setup.classList.add('hidden');
+};
+
+var onFormSubmit = function () {
+
+};
+
+setupOpen.addEventListener('click', onButtonClickOpen);
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    onButtonClickOpen();
+  }
+});
+
+setupClose.addEventListener('click', onButtonClickClose);
+
+
+// Когда окно открыто,
+//                    если фокус не на форме ввода имени то ESC должен вызвать onButtonClickClose,
+//                    если фокус находится на кнопке закрытия, то ENTER должен вызвать onButtonClickClose
+//                    «Сохранить» приводит onFormSubmit
+//                    если фокус находится на «Сохранить», то ENTER приводит к onFormSubmit
