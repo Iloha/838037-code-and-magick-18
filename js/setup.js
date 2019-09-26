@@ -85,19 +85,26 @@ var generateWizardsData = function () {
   return heroesArray;
 };
 
+var onEscPress = function (evt) {
+  if (evt.keyCode === ESC_CODE && document.activeElement !== nameField) {
+    closeSetup();
+  }
+};
+
+var closeSetup = function () {
+  setup.classList.add('hidden');
+};
+
 var onButtonClickOpen = function () {
   setup.classList.remove('hidden');
 
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_CODE && document.activeElement !== nameField) {
-      onButtonClickClose();
-    }
-  });
+  document.addEventListener('keydown', onEscPress);
 };
 
 var onButtonClickClose = function () {
-  setup.classList.add('hidden');
+  closeSetup();
   document.removeEventListener('keydown', onButtonClickOpen);
+  document.removeEventListener('keydown', onEscPress);
 };
 
 var onFormSubmit = function () {
