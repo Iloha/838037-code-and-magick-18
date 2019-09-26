@@ -1,5 +1,7 @@
 'use strict';
 var HEROES_NUMBER = 4;
+var ENTER_CODE = 13;
+var ESC_CODE = 27;
 var userDialog = document.querySelector('.setup');
 var setUpSimilar = userDialog.querySelector('.setup-similar');
 var wizardsList = userDialog.querySelector('.setup-similar-list');
@@ -7,7 +9,7 @@ var wizardTemplate = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
 
-var namesArray = [
+var namesData = [
   'Иван',
   'Хуан Себастьян',
   'Мария', 'Кристоф',
@@ -17,7 +19,7 @@ var namesArray = [
   'Вашингтон'
 ];
 
-var surnamesArray = [
+var surnamesData = [
   'да Марья',
   'Верон',
   'Мирабелла',
@@ -28,7 +30,7 @@ var surnamesArray = [
   'Ирвинг'
 ];
 
-var coatColorArray = [
+var coatColorData = [
   'rgb(101, 137, 164)',
   'rgb(241, 43, 107)',
   'rgb(146, 100, 161)',
@@ -62,8 +64,8 @@ var generateWizardsData = function () {
 
   for (var i = 0; i < HEROES_NUMBER; i++) {
     heroesArray.push({
-      name: getRandomFromArray(namesArray) + ' ' + getRandomFromArray(surnamesArray),
-      coatColor: getRandomFromArray(coatColorArray),
+      name: getRandomFromArray(namesData) + ' ' + getRandomFromArray(surnamesData),
+      coatColor: getRandomFromArray(coatColorData),
       eyesColor: getRandomFromArray(eyesColorData)
     });
   }
@@ -98,9 +100,6 @@ wizardsList.appendChild(fragment);
 userDialog.classList.remove('hidden');
 setUpSimilar.classList.remove('hidden');
 
-
-
-
 var setupOpen = document.querySelector('.setup-open');
 var setup = document.querySelector('.setup');
 var setupClose = setup.querySelector('.setup-close');
@@ -114,12 +113,11 @@ var wizardFireball = document.querySelector('.setup-fireball-wrap');
 var wizardFireballField = document.querySelector('input[name="fireball-color"]');
 
 
-// Handlers
 var onButtonClickOpen = function () {
   setup.classList.remove('hidden');
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 27 && document.activeElement !== nameField) {
+    if (evt.keyCode === ESC_CODE && document.activeElement !== nameField) {
       onButtonClickClose();
     }
   });
@@ -127,13 +125,14 @@ var onButtonClickOpen = function () {
 
 var onButtonClickClose = function () {
   setup.classList.add('hidden');
+  document.removeEventListener('keydown', onButtonClickOpen);
 };
 
 // var onFormSubmit = function () {
 // };
 
 var onUpdateCoatColor = function () {
-  var coatColor = getRandomFromArray(coatColorArray);
+  var coatColor = getRandomFromArray(coatColorData);
   wizardCoatField.value = coatColor;
   wizardCoat.style.fill = coatColor;
 };
@@ -153,7 +152,7 @@ var onUpdateFireballColor = function () {
 setupOpen.addEventListener('click', onButtonClickOpen);
 
 setupOpen.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13) {
+  if (evt.keyCode === ENTER_CODE) {
     onButtonClickOpen();
   }
 });
@@ -161,7 +160,7 @@ setupOpen.addEventListener('keydown', function (evt) {
 setupClose.addEventListener('click', onButtonClickClose);
 
 setupClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13) {
+  if (evt.keyCode === ENTER_CODE) {
     onButtonClickClose();
   }
 });
