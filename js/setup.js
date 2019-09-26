@@ -8,6 +8,18 @@ var wizardsList = userDialog.querySelector('.setup-similar-list');
 var wizardTemplate = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
+var setupOpen = document.querySelector('.setup-open');
+var setup = document.querySelector('.setup');
+var setupClose = setup.querySelector('.setup-close');
+var setupFormSubmit = setup.querySelector('.setup-submit');
+var setupForm = setup.querySelector('setup-wizard-form');
+var nameField = setup.querySelector('.setup-user-name');
+var wizardCoat = document.querySelector('.setup-wizard .wizard-coat ');
+var wizardCoatField = setup.querySelector('input[name="coat-color"]');
+var wizardEyes = document.querySelector('.setup-wizard .wizard-eyes');
+var wizardEyesField = document.querySelector('input[name="eyes-color"]');
+var wizardFireball = document.querySelector('.setup-fireball-wrap');
+var wizardFireballField = document.querySelector('input[name="fireball-color"]');
 
 var namesData = [
   'Иван',
@@ -73,6 +85,43 @@ var generateWizardsData = function () {
   return heroesArray;
 };
 
+var onButtonClickOpen = function () {
+  setup.classList.remove('hidden');
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_CODE && document.activeElement !== nameField) {
+      onButtonClickClose();
+    }
+  });
+};
+
+var onButtonClickClose = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onButtonClickOpen);
+};
+
+var onFormSubmit = function () {
+  setupForm.submit();
+};
+
+var onUpdateCoatColor = function () {
+  var coatColor = getRandomFromArray(coatColorData);
+  wizardCoatField.value = coatColor;
+  wizardCoat.style.fill = coatColor;
+};
+
+var onUpdateEyesColor = function () {
+  var eyesColor = getRandomFromArray(eyesColorData);
+  wizardEyesField.value = eyesColor;
+  wizardEyes.style.fill = eyesColor;
+};
+
+var onUpdateFireballColor = function () {
+  var fireballColor = getRandomFromArray(fireballColorData);
+  wizardFireballField.value = fireballColor;
+  wizardFireball.style.background = fireballColor;
+};
+
 var renderWizard = function (wizard) {
   var wizardElement = wizardTemplate.cloneNode(true);
 
@@ -100,54 +149,6 @@ wizardsList.appendChild(fragment);
 userDialog.classList.remove('hidden');
 setUpSimilar.classList.remove('hidden');
 
-var setupOpen = document.querySelector('.setup-open');
-var setup = document.querySelector('.setup');
-var setupClose = setup.querySelector('.setup-close');
-var setupSubmit = setup.querySelector('.setup-submit');
-var nameField = setup.querySelector('.setup-user-name');
-var wizardCoat = document.querySelector('.setup-wizard .wizard-coat ');
-var wizardCoatField = setup.querySelector('input[name="coat-color"]');
-var wizardEyes = document.querySelector('.setup-wizard .wizard-eyes');
-var wizardEyesField = document.querySelector('input[name="eyes-color"]');
-var wizardFireball = document.querySelector('.setup-fireball-wrap');
-var wizardFireballField = document.querySelector('input[name="fireball-color"]');
-
-
-var onButtonClickOpen = function () {
-  setup.classList.remove('hidden');
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_CODE && document.activeElement !== nameField) {
-      onButtonClickClose();
-    }
-  });
-};
-
-var onButtonClickClose = function () {
-  setup.classList.add('hidden');
-  document.removeEventListener('keydown', onButtonClickOpen);
-};
-
-// var onFormSubmit = function () {
-// };
-
-var onUpdateCoatColor = function () {
-  var coatColor = getRandomFromArray(coatColorData);
-  wizardCoatField.value = coatColor;
-  wizardCoat.style.fill = coatColor;
-};
-
-var onUpdateEyesColor = function () {
-  var eyesColor = getRandomFromArray(eyesColorData);
-  wizardEyesField.value = eyesColor;
-  wizardEyes.style.fill = eyesColor;
-};
-
-var onUpdateFireballColor = function () {
-  var fireballColor = getRandomFromArray(fireballColorData);
-  wizardFireballField.value = fireballColor;
-  wizardFireball.style.background = fireballColor;
-};
 
 setupOpen.addEventListener('click', onButtonClickOpen);
 
@@ -171,6 +172,10 @@ wizardEyes.addEventListener('click', onUpdateEyesColor);
 
 wizardFireball.addEventListener('click', onUpdateFireballColor);
 
-// Когда окно открыто,
-//                    «Сохранить» приводит onFormSubmit
-//                    если фокус находится на «Сохранить», то ENTER приводит к onFormSubmit
+setupFormSubmit.addEventListener('click', onFormSubmit);
+
+setupFormSubmit.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_CODE) {
+    onFormSubmit();
+  }
+});
