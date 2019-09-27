@@ -87,6 +87,8 @@ var generateWizardsData = function () {
 
 var closeSetup = function () {
   setup.classList.add('hidden');
+  document.removeEventListener('keydown', onEnterPress);
+  document.removeEventListener('click', onEnterPressSetupClose);
   document.removeEventListener('keydown', onEnterPressSubmitForm);
   document.removeEventListener('click', onFormSubmit);
   document.removeEventListener('keydown', onEscPress);
@@ -94,6 +96,10 @@ var closeSetup = function () {
   document.removeEventListener('click', onUpdateCoatColor);
   document.removeEventListener('click', onUpdateEyesColor);
   document.removeEventListener('click', onUpdateFireballColor);
+};
+
+var openSetup = function () {
+  setup.classList.remove('hidden');
 };
 
 var onEscPress = function (evt) {
@@ -104,16 +110,15 @@ var onEscPress = function (evt) {
 
 var onEnterPressSetupClose = function (evt) {
   if (evt.keyCode === ENTER_CODE) {
-    onButtonClickClose();
+    closeSetup();
   }
 };
 
 var onEnterPress = function (evt) {
   if (evt.keyCode === ENTER_CODE) {
-    onButtonClickOpen();
+    openSetup();
   }
 };
-
 
 var onEnterPressSubmitForm = function (evt) {
   if (evt.keyCode === ENTER_CODE) {
@@ -122,7 +127,7 @@ var onEnterPressSubmitForm = function (evt) {
 };
 
 var onButtonClickOpen = function () {
-  setup.classList.remove('hidden');
+  openSetup();
 
   document.addEventListener('keydown', onEscPress);
 };
