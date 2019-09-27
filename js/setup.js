@@ -85,14 +85,40 @@ var generateWizardsData = function () {
   return heroesArray;
 };
 
+var closeSetup = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onEnterPressSubmitForm);
+  document.removeEventListener('click', onFormSubmit);
+  document.removeEventListener('keydown', onEscPress);
+  document.removeEventListener('keydown', onButtonClickClose);
+  document.removeEventListener('click', onUpdateCoatColor);
+  document.removeEventListener('click', onUpdateEyesColor);
+  document.removeEventListener('click', onUpdateFireballColor);
+};
+
 var onEscPress = function (evt) {
   if (evt.keyCode === ESC_CODE && document.activeElement !== nameField) {
     closeSetup();
   }
 };
 
-var closeSetup = function () {
-  setup.classList.add('hidden');
+var onEnterPressSetupClose = function (evt) {
+  if (evt.keyCode === ENTER_CODE) {
+    onButtonClickClose();
+  }
+};
+
+var onEnterPress = function (evt) {
+  if (evt.keyCode === ENTER_CODE) {
+    onButtonClickOpen();
+  }
+};
+
+
+var onEnterPressSubmitForm = function (evt) {
+  if (evt.keyCode === ENTER_CODE) {
+    onFormSubmit();
+  }
 };
 
 var onButtonClickOpen = function () {
@@ -103,8 +129,6 @@ var onButtonClickOpen = function () {
 
 var onButtonClickClose = function () {
   closeSetup();
-  document.removeEventListener('keydown', onButtonClickOpen);
-  document.removeEventListener('keydown', onEscPress);
 };
 
 var onFormSubmit = function () {
@@ -156,22 +180,13 @@ wizardsList.appendChild(fragment);
 userDialog.classList.remove('hidden');
 setUpSimilar.classList.remove('hidden');
 
-
 setupOpen.addEventListener('click', onButtonClickOpen);
 
-setupOpen.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_CODE) {
-    onButtonClickOpen();
-  }
-});
+setupOpen.addEventListener('keydown', onEnterPress);
 
 setupClose.addEventListener('click', onButtonClickClose);
 
-setupClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_CODE) {
-    onButtonClickClose();
-  }
-});
+setupClose.addEventListener('keydown', onEnterPressSetupClose);
 
 wizardCoat.addEventListener('click', onUpdateCoatColor);
 
@@ -181,8 +196,4 @@ wizardFireball.addEventListener('click', onUpdateFireballColor);
 
 setupFormSubmit.addEventListener('click', onFormSubmit);
 
-setupFormSubmit.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_CODE) {
-    onFormSubmit();
-  }
-});
+setupFormSubmit.addEventListener('keydown', onEnterPressSubmitForm);
